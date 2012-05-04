@@ -1,8 +1,20 @@
-{-# LANGUAGE NoImplicitPrelude, ExtendedDefaultRules #-}
+{-# LANGUAGE NoImplicitPrelude, ExtendedDefaultRules, TypeSynonymInstances #-}
 module PHP where
 
 import Data.List (group)
 import Prelude hiding (foldr, foldl, subtract, elem, notElem)
+
+instance Num String where
+  fromInteger = show
+
+  (+) x y = show (read x + read y)
+  (-) x y = show (read x - read y)
+  (*) x y = show (read x * read y)
+
+  abs ('-':x) = x
+  abs x = x
+
+  signum x = if abs x == x then 1 else -1
 
 sort = sortBy compare
 
