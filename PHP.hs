@@ -1,4 +1,4 @@
-{-# LANGUAGE NoImplicitPrelude, ExtendedDefaultRules, TypeSynonymInstances #-}
+{-# LANGUAGE NoImplicitPrelude, ExtendedDefaultRules, TypeSynonymInstances, FlexibleInstances #-}
 module PHP where
 
 import Data.List (group)
@@ -28,6 +28,8 @@ instance Integral String where
   rem x y = show (read x `rem` read y)
   div x y = show (read x `div` read y)
   mod x y = show (read x `mod` read y)
+
+  quotRem x y = (quot x y, rem x y)
 
   toInteger = read
 
