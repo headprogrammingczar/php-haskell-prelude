@@ -1,5 +1,5 @@
 {-# LANGUAGE NoImplicitPrelude, ExtendedDefaultRules, TypeSynonymInstances, FlexibleInstances #-}
-module PHP where
+module Prelude.PHP where
 
 import Data.List (group)
 import Prelude hiding (foldr, foldl, subtract, elem, notElem)
