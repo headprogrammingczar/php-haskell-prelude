@@ -9,10 +9,10 @@ Name:                php
 Version:             0.1
 
 -- A short (one-line) description of the package.
-Synopsis:            Haskell made entirely worse.
+Synopsis:            The flexibility of Haskell and the safety of PHP
 
 -- A longer description of the package.
--- Description:         
+Description:         At last, a module that combines the dynamic-typing features of GHC Haskell with the performance and strict semantics of PHP!
 
 -- The license under which the package is released.
 License:             BSD3
@@ -21,11 +21,11 @@ License:             BSD3
 License-file:        LICENSE
 
 -- The package author(s).
--- Author:              
+Author:              JoeQuinn
 
 -- An email address to which users can send suggestions, bug reports,
 -- and patches.
--- Maintainer:          
+Maintainer:          headprogrammingczar@gmail.com
 
 -- A copyright notice.
 -- Copyright:           
@@ -39,7 +39,11 @@ Build-type:          Simple
 -- Extra-source-files:  
 
 -- Constraint on the version of Cabal needed to build this package.
-Cabal-version:       >=1.2
+Cabal-version:       >=1.6
+
+Source-Repository head
+  type: git
+  location: https://github.com/headprogrammingczar/php-haskell-prelude
 
 
 Library
