@@ -4,12 +4,16 @@ module Prelude.PHP where
 import Data.List (group)
 import Prelude hiding (foldr, foldl, subtract, elem, notElem)
 
+intval str = case reads str of
+    [] -> 0
+    [(x, _)] -> x
+
 instance Num String where
   fromInteger = show
 
-  (+) x y = show (read x + read y)
-  (-) x y = show (read x - read y)
-  (*) x y = show (read x * read y)
+  (+) x y = show (intval x + intval y)
+  (-) x y = show (intval x - intval y)
+  (*) x y = show (intval x * intval y)
 
   abs ('-':x) = x
   abs x = x
@@ -17,46 +21,46 @@ instance Num String where
   signum x = if abs x == x then 1 else -1
 
 instance Real String where
-  toRational = toRational . read
+  toRational = toRational . intval
 
 instance Enum String where
   toEnum = show
-  fromEnum = read
+  fromEnum = intval
 
 instance Integral String where
-  quot x y = show (read x `quot` read y)
-  rem x y = show (read x `rem` read y)
-  div x y = show (read x `div` read y)
-  mod x y = show (read x `mod` read y)
+  quot x y = show (intval x `quot` intval y)
+  rem x y = show (intval x `rem` intval y)
+  div x y = show (intval x `div` intval y)
+  mod x y = show (intval x `mod` intval y)
 
   quotRem x y = (quot x y, rem x y)
 
-  toInteger = read
+  toInteger = intval
 
 instance Fractional String where
-  (/) x y = show (read x / read y)
-  recip x = show (recip (read x))
+  (/) x y = show (intval x / intval y)
+  recip x = show (recip (intval x))
   fromRational = show
 
 instance Floating String where
   pi = "3.14"
-  exp x = show (exp (read x))
-  sqrt x = show (sqrt (read x))
-  log x = show (log (read x))
+  exp x = show (exp (intval x))
+  sqrt x = show (sqrt (intval x))
+  log x = show (log (intval x))
 
-  sin x = show (sin (read x))
+  sin x = show (sin (intval x))
   cos x = sin (x + 90)
-  sinh x = show (sinh (read x))
+  sinh x = show (sinh (intval x))
   cosh x = sinh (x + 90)
-  asin x = show (asin (read x))
+  asin x = show (asin (intval x))
   acos x = asin (x + 90)
   atan x = asin x / acos x
-  asinh x = show (asinh (read x))
+  asinh x = show (asinh (intval x))
   acosh x = asinh (x + 90)
   atanh x = asinh x / acosh x
 
 instance RealFrac String where
-  properFraction x = (proper, frac) where proper = fromInteger (read (takeWhile (/= '.') x)); frac = tail (dropWhile (/= '.') x)
+  properFraction x = (proper, frac) where proper = fromInteger (intval (takeWhile (/= '.') x)); frac = tail (dropWhile (/= '.') x)
 
 -- TODO - RealFloat
 
