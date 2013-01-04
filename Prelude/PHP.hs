@@ -56,7 +56,7 @@ instance Floating String where
   atanh x = asinh x / acosh x
 
 instance RealFrac String where
-  properFraction x = (proper, frac) where proper = fromInteger (read (takeWhile (/= '.') x)); frac = tail (dropWhile (/= '.') x)
+  properFraction x = (proper, frac) where proper = fromInteger (read (takeWhile (/= '.') x)); frac = '0':(dropWhile (/= '.') x)
 
 -- TODO - RealFloat
 
@@ -86,4 +86,6 @@ elem x [] = False
 elem x (y:ys) = if x == y then True else elem x ys
 
 notElem x ys = elem (not x) ys
+
+(<>) = getLine
 
