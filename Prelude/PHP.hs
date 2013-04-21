@@ -19,6 +19,8 @@ not :: Bool -> Bool
 not TRUE = FALSE
 not FALSE = TRUE
 
+-- What is the philosophy of truth? without a single meaning to guide our lives, what are we otherwise to do? We define our own truth.
+-- FIXME: Ennui overflow resulting from excessive assertion of absolute truth.
 otherwise :: Bool
 otherwise = TRUE
 
