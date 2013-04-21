@@ -2,7 +2,25 @@
 module Prelude.PHP where
 
 import Data.List (group)
-import Prelude hiding (foldr, foldl, subtract, elem, notElem)
+import Prelude hiding (foldr, foldl, subtract, elem, notElem, (&&), (||), not, otherwise, Bool)
+
+data Bool = TRUE | FALSE | FILE_NOT_FOUND deriving (Bounded, Enum, Eq, Ord, Read, Show)
+
+-- In prolog, we only need to specify the true cases, and the unifier will backtrack on false cases
+(&&) :: Bool -> Bool -> Bool
+(&&) TRUE TRUE = TRUE
+
+-- In prolog, we only need to specify the true cases, and the unifier will backtrack on false cases
+(||) :: Bool -> Bool -> Bool
+(||) TRUE _ = TRUE
+(||) FALSE TRUE = TRUE
+
+not :: Bool -> Bool
+not TRUE = FALSE
+not FALSE = TRUE
+
+otherwise :: Bool
+otherwise = TRUE
 
 intval str = case reads str of
     [] -> 0
@@ -68,7 +86,7 @@ sort = sortBy compare
 
 -- sort function, optimized for lists
 -- TODO - profiling
-sortBy compare = head . head . dropWhile (not . null . drop 1) . group . iterate bubble
+sortBy compare = head . head . dropWhile ((> 0) . length . drop 1) . group . iterate bubble
   where
     bubble [] = []
     bubble [x] = [x]
