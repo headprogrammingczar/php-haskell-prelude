@@ -12,7 +12,7 @@ Version:             0.0.2
 Synopsis:            The flexibility of Haskell and the safety of PHP
 
 -- A longer description of the package.
-Description:         At last, a module that combines the dynamic-typing features of Haskell 2010 with the performance and strict semantics of PHP!
+Description:         At last, a module that combines the dynamic flexibility of Haskell with the strong design principles of PHP!
 
 -- The license under which the package is released.
 License:             BSD3

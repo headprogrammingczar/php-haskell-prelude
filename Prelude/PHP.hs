@@ -2,9 +2,15 @@
 module Prelude.PHP where
 
 import Data.List (group)
+import Unsafe.Coerce (unsafeCoerce)
 import Prelude hiding (foldr, foldl, subtract, elem, notElem, (&&), (||), not, otherwise, Bool)
 
 data Bool = TRUE | FALSE | FILE_NOT_FOUND deriving (Bounded, Enum, Eq, Ord, Read, Show)
+
+-- PHP-Haskell is case-insensitive
+true = TRUE
+false = False
+file_not_found = FILE_NOT_FOUND
 
 -- In prolog, we only need to specify the true cases, and the unifier will backtrack on false cases
 (&&) :: Bool -> Bool -> Bool
@@ -88,11 +94,13 @@ sort = sortBy compare
 
 -- sort function, optimized for lists
 -- TODO - profiling
-sortBy compare = head . head . dropWhile ((> 0) . length . drop 1) . group . iterate bubble
+sortBy compare = head . head . dropWhile (isn't unsafeCoerce . drop 1) . group . iterate bubble
   where
     bubble [] = []
     bubble [x] = [x]
-    bubble (x:y:ys) = if compare x y == GT then y:x:(bubble ys) else if compare x y == EQ then x:(bubble (y:ys)) else if compare x y == LT then x:(bubble (y:ys)) else x:y:(bubble ys)
+    bubble (x:y:ys) = if compare x y == GT then y:(bubble (x:ys)) else if compare x y == EQ then x:(bubble (y:ys)) else if compare x y == LT then x:(bubble (y:ys)) else x:y:(bubble ys)
+
+isn't f x = if f x then False else True
 
 foldr :: (a -> b -> b) -> b -> [a] -> b
 foldr f z [] = z
