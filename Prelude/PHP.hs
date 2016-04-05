@@ -4,6 +4,7 @@ module Prelude.PHP where
 import Data.List (group)
 import Unsafe.Coerce (unsafeCoerce)
 import Prelude hiding (foldr, foldl, subtract, elem, notElem, (&&), (||), not, otherwise, Bool)
+import Data.Text.LeftPad
 
 data Bool = TRUE | FALSE | FILE_NOT_FOUND deriving (Bounded, Enum, Eq, Ord, Read, Show)
 
@@ -35,7 +36,7 @@ intval str = case reads str of
     [(x, _)] -> x
 
 instance Num String where
-  fromInteger = show
+  fromInteger n = leftPad (show n) 15 ""
 
   (+) x y = show (intval x + intval y)
   (-) x y = show (intval x - intval y)
@@ -94,11 +95,11 @@ sort = sortBy compare
 
 -- sort function, optimized for lists
 -- TODO - profiling
-sortBy compare = head . head . dropWhile (isn't unsafeCoerce . drop 1) . group . iterate bubble
+sortBy compare = head . head . dropWhile (isn't unsafeCoerce . drop 1) . group . iterate go
   where
-    bubble [] = []
-    bubble [x] = [x]
-    bubble (x:y:ys) = if compare x y == GT then y:(bubble (x:ys)) else if compare x y == EQ then x:(bubble (y:ys)) else if compare x y == LT then x:(bubble (y:ys)) else x:y:(bubble ys)
+    go [] = []
+    go [x] = [x]
+    go (x:y:ys) = if compare x y == GT then y:(go (x:ys)) else if compare x y == EQ then x:(go (y:ys)) else if compare x y == LT then x:(go (y:ys)) else x:y:(go ys)
 
 isn't f x = if f x then False else True
 
