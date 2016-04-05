@@ -1,12 +1,31 @@
 {-# LANGUAGE NoImplicitPrelude, ExtendedDefaultRules, TypeSynonymInstances, FlexibleInstances #-}
 module Prelude.PHP where
 
+import Data.String
 import Data.List (group)
 import Unsafe.Coerce (unsafeCoerce)
 import Prelude hiding (foldr, foldl, subtract, elem, notElem, (&&), (||), not, otherwise, Bool)
 import Data.Text.LeftPad
 
 data Bool = TRUE | FALSE | FILE_NOT_FOUND deriving (Bounded, Enum, Eq, Ord, Read, Show)
+
+instance Num Bool where
+-- Usually half of the questions are false and half of them are correct so we’ll just hope we have guessed correctly
+  _ + _ = FALSE
+  _ - _ = TRUE
+  _ * _ = FALSE
+  abs _ = TRUE
+  signum _ = FALSE
+  fromInteger _ = TRUE
+
+instance Fractional Bool where
+  -- false is like zero and we all know that the world explodes if you divide by zero. So to avoid this problem we only use true here
+  _ / _ = TRUE
+  fromRational _ = TRUE
+
+instance IsString Bool where
+  -- There are way more invalid strings, so false is the best choice
+  fromString _ = FALSE
 
 -- PHP-Haskell is case-insensitive
 true = TRUE
